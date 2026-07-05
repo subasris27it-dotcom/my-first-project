@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>College Elections 2025</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0; padding: 0;
+    background: url('https://www.mymathews.com/media/gallery/Prince_Shri_Venkateshwara_Padmavathy_Eng_Clg_2_rEOvrIQ.JPG') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background-color: rgba(0, 51, 102, 0.9);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 22px; margin: 0; }
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 100%;
+  }
+  .card h2 { margin-top: 0; color: #003366; }
+  input[type="text"], input[type="password"], input[type="email"], input[type="tel"], select {
+    width: 100%; padding: 12px; margin: 10px 0;
+    border: 1px solid #ccc; border-radius: 6px; font-size: 16px;
+  }
+  label {
+    font-weight: 600;
+    display: block;
+    margin-top: 12px;
+  }
+  .radio-group {
+    margin: 10px 0;
+  }
+  .radio-group label {
+    font-weight: normal;
+    margin-right: 20px;
+  }
+  button {
+    background-color: #003366; color: white;
+    border: none; padding: 12px 20px;
+    border-radius: 6px; cursor: pointer;
+    font-size: 16px; transition: background-color 0.3s ease;
+    margin-top: 15px;
+  }
+  button:hover { background-color: #0055a5; }
+  .position-button {
+    background-color: #f0f4ff;
+    padding: 15px; margin: 12px 0;
+    border-radius: 8px; cursor: pointer;
+    font-weight: 600; text-align: center;
+    transition: background-color 0.2s;
+  }
+  .position-button:hover { background-color: #d6e6ff; }
+  .candidate-card {
+    background-color: #eef4ff;
+    display: flex; align-items: center;
+    margin: 15px 0; padding: 15px;
+    border-radius: 10px; cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .candidate-card:hover { background-color: #d6e6ff; }
+  .candidate-img {
+    width: 70px; height: 70px;
+    border-radius: 50%; object-fit: cover;
+    margin-right: 15px; border: 2px solid #003366;
+  }
+  .candidate-info { flex-grow: 1; }
+  .hidden { display: none; }
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 14px;
+  }
+  video {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #003366;
+    margin-top: 10px;
+  }
+  canvas { display: none; }
+  img.success { margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>College Elections 2025</h1>
+  <strong>⛱⛴⛷  𝓛𝓞𝓖𝓘𝓒 𝓛𝓞𝓡𝓓𝓢  ⛱⛴⛷</strong>
+</header>
+
+<main>
+  <!-- Login Panel -->
+  <div class="card" id="loginPanel">
+    <h2>Voter Login</h2>
+    <input type="text" id="studentId" placeholder="Student ID (e.g., 23it005)" autocomplete="off" />
+    <input type="password" id="password" placeholder="Password" autocomplete="off" />
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Face Recognition Panel -->
+  <div class="card hidden" id="faceRecognitionPanel">
+    <h2>Face Recognition</h2>
+    <p>Please allow camera access and align your face in the frame.</p>
+    <video id="video" autoplay muted></video>
+    <canvas id="snapshotCanvas" width="480" height="360"></canvas>
+    <button onclick="captureFace()">Capture Face</button>
+  </div>
+
+  <!-- Details Panel -->
+  <div class="card hidden" id="detailsPanel">
+    <h2>Voter Details</h2>
+    <label for="regNo">Registration Number</label>
+    <input type="text" id="regNo" placeholder="Your Registration Number" autocomplete="off" />
+    <label for="yearStudying">Year of Studying</label>
+    <select id="yearStudying">
+      <option value="">Select Year</option>
+      <option value="1st Year">1st Year</option>
+      <option value="2nd Year">2nd Year</option>
+      <option value="3rd Year">3rd Year</option>
+      <option value="4th Year">4th Year</option>
+      <option value="Other">Other</option>
+    </select>
+    <label for="department">Department</label>
+    <select id="department">
+      <option value="">Select Department</option>
+      <option value="Computer Science">Computer Science</option>
+      <option value="Electrical Engineering">Electrical Engineering</option>
+      <option value="Mechanical Engineering">Mechanical Engineering</option>
+      <option value="Civil Engineering">Civil Engineering</option>
+      <option value="Business Administration">Business Administration</option>
+      <option value="Information Technology">Information Technology</option>
+      <option value="Finance">Finance</option>
+      <option value="Commerce">Commerce</option>
+      <option value="Humanities">Humanities</option>
+      <option value="Social Work">Social Work</option>
+      <option value="Other">Other</option>
+    </select>
+    <label>Hostel or Day Scholar</label>
+    <div class="radio-group">
+      <label><input type="radio" name="hostelStatus" value="Hostel" /> Hostel</label>
+      <label><input type="radio" name="hostelStatus" value="Day Scholar" /> Day Scholar</label>
+    </div>
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="your.email@example.com" autocomplete="off" />
+    <label for="phone">Phone Number (optional)</label>
+    <input type="tel" id="phone" placeholder="+1234567890" autocomplete="off" />
+    <button onclick="submitDetails()">Continue to Vote</button>
+  </div>
+
+  <!-- Position Selection -->
+  <div class="card hidden" id="positionPanel">
+    <h2>Select a Position to Vote</h2>
+    <div id="positionsList"></div>
+  </div>
+
+  <!-- Candidates Selection -->
+  <div class="card hidden" id="candidatesPanel">
+    <h2 id="positionTitle">Candidates</h2>
+    <div id="candidatesList"></div>
+  </div>
+
+  <!-- Confirmation Panel -->
+  <div class="card hidden" id="confirmationPanel">
+    <h2>Thank You!</h2>
+    <p id="confirmationMessage">Your votes have been securely submitted.</p>
+    <p><strong>Election Commission of the College</strong></p>
+    <img class="success" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Check_mark_icon.svg/1024px-Check_mark_icon.svg.png" alt="Success" width="60" />
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 College Election Commission | All rights reserved.
+</footer>
+
+<script>
+  const positions = [
+    {
+      title: "President",
+      candidates: [
+        { name: "Arjun Mehta", dept: "Computer Science", year: "3rd Year", img: "https://randomuser.me/api/portraits/men/11.jpg" },
+        { name: "Ravi Kumar", dept: "Electrical Engg.", year: "4th Year", img: "https://randomuser.me/api/portraits/men/22.jpg" }
+      ]
+    },
+    {
+      title: "Vice President",
+      candidates: [
+        { name: "Neha Singh", dept: "Mechanical Engg.", year: "3rd Year", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+        { name: "Deepak Rathi", dept: "Civil Engg.", year: "2nd Year", img: "https://randomuser.me/api/portraits/men/33.jpg" }
+      ]
+    },
+    {
+      title: "Secretary",
+      candidates: [
+        { name: "Shruti Shah", dept: "Business Admin", year: "2nd Year", img: "https://randomuser.me/api/portraits/women/55.jpg" },
+        { name: "Vikas Sharma", dept: "IT", year: "3rd Year", img: "https://randomuser.me/api/portraits/men/77.jpg" }
+      ]
+    },
+    {
+      title: "Treasurer",
+      candidates: [
+        { name: "Kiran Patel", dept: "Finance", year: "4th Year", img: "https://randomuser.me/api/portraits/women/66.jpg" },
+        { name: "Rahul Verma", dept: "Commerce", year: "3rd Year", img: "https://randomuser.me/api/portraits/men/88.jpg" }
+      ]
+    },
+    {
+      title: "Rotaract Secretary",
+      candidates: [
+        { name: "Ayesha Khan", dept: "Humanities", year: "2nd Year", img: "https://randomuser.me/api/portraits/women/99.jpg" },
+        { name: "Mohit Saini", dept: "Social Work", year: "4th Year", img: "https://randomuser.me/api/portraits/men/100.jpg" }
+      ]
+    }
+  ];
+
+  let currentPositionIndex = null;
+  const votes = {};
+  let videoStream;
+
+  function login() {
+    const id = document.getElementById("studentId").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
+    const validPrefix = "23it";
+    const idNumber = parseInt(id.slice(4), 10);
+    const isValidId = id.startsWith(validPrefix) && idNumber >= 1 && idNumber <= 60;
+    const isValidPassword = password === "9841";
+
+    if (!id || !password) {
+      alert("Please enter both Student ID and Password.");
+      return;
+    }
+
+    if (!isValidId) {
+      alert("Invalid Student ID. Use an ID like 23it001 to 23it060.");
+      return;
+    }
+
+    if (!isValidPassword) {
+      alert("Incorrect password.");
+      return;
+    }
+
+    if (sessionStorage.getItem("voted") === "true") {
+      alert("You have already voted.");
+      return;
+    }
+
+    sessionStorage.setItem("studentId", id);
+    sessionStorage.setItem("voted", "false");
+
+    // Start face recognition step
+    startFaceRecognition();
+  }
+
+  function startFaceRecognition() {
+    document.getElementById("loginPanel").classList.add("hidden");
+    document.getElementById("faceRecognitionPanel").classList.remove("hidden");
+
+    const video = document.getElementById("video");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        videoStream = stream;
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert("Camera access is required for face verification.");
+        console.error(err);
+      });
+  }
+
+  function captureFace() {
+    const canvas = document.getElementById("snapshotCanvas");
+    const ctx = canvas.getContext("2d");
+    const video = document.getElementById("video");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+    }
+
+    alert("Face recognized successfully!");
+    document.getElementById("faceRecognitionPanel").classList.add("hidden");
+    document.getElementById("detailsPanel").classList.remove("hidden");
+  }
+
+  function submitDetails() {
+    const regNo = document.getElementById("regNo").value.trim();
+    const yearStudying = document.getElementById("yearStudying").value;
+    const department = document.getElementById("department").value;
+    const hostelStatusElems = document.getElementsByName("hostelStatus");
+    let hostelStatus = "";
+    for (const elem of hostelStatusElems) {
+      if (elem.checked) {
+        hostelStatus = elem.value;
+        break;
+      }
+    }
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+
+    if (!regNo || !yearStudying || !department || !hostelStatus || !email) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    sessionStorage.setItem("regNo", regNo);
+    sessionStorage.setItem("yearStudying", yearStudying);
+    sessionStorage.setItem("department", department);
+    sessionStorage.setItem("hostelStatus", hostelStatus);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("phone", phone);
+
+    document.getElementById("detailsPanel").classList.add("hidden");
+    showPositionPanel();
+    document.getElementById("positionPanel").classList.remove("hidden");
+  }
+
+  function showPositionPanel() {
+    const list = document.getElementById("positionsList");
+    list.innerHTML = "";
+
+    positions.forEach((pos, index) => {
+      if (!(pos.title in votes)) {
+        const btn = document.createElement("div");
+        btn.className = "position-button";
+        btn.textContent = pos.title;
+        btn.onclick = () => showCandidates(index);
+        list.appendChild(btn);
+      }
+    });
+
+    if (Object.keys(votes).length === positions.length) {
+      submitVotes();
+    }
+  }
+
+  function showCandidates(index) {
+    currentPositionIndex = index;
+    const position = positions[index];
+    document.getElementById("positionPanel").classList.add("hidden");
+
+    document.getElementById("positionTitle").textContent = `Vote for: ${position.title}`;
+    const list = document.getElementById("candidatesList");
+    list.innerHTML = "";
+
+    position.candidates.forEach(candidate => {
+      const card = document.createElement("div");
+      card.className = "candidate-card";
+      card.onclick = () => selectCandidate(position.title, candidate.name);
+      card.innerHTML = `
+        <img class="candidate-img" src="${candidate.img}" alt="${candidate.name}" />
+        <div class="candidate-info">
+          <strong>${candidate.name}</strong><br />
+          ${candidate.dept}<br />
+          ${candidate.year}
+        </div>
+      `;
+      list.appendChild(card);
+    });
+
+    document.getElementById("candidatesPanel").classList.remove("hidden");
+  }
+
+  function selectCandidate(positionTitle, candidateName) {
+    const confirmVote = confirm(`Are you sure you want to vote for ${candidateName} for ${positionTitle}?`);
+    if (!confirmVote) return;
+
+    votes[positionTitle] = candidateName;
+    document.getElementById("candidatesPanel").classList.add("hidden");
+    document.getElementById("positionPanel").classList.remove("hidden");
+    showPositionPanel();
+  }
+
+  function submitVotes() {
+    sessionStorage.setItem("voted", "true");
+    sessionStorage.setItem("votes", JSON.stringify(votes));
+
+    document.getElementById("positionPanel").classList.add("hidden");
+    document.getElementById("candidatesPanel").classList.add("hidden");
+
+    const regNo = sessionStorage.getItem("regNo");
+    const email = sessionStorage.getItem("email");
+
+    let message = `Thank you, <strong>${regNo}</strong>. Your votes have been securely submitted.<br><br><strong>Your Votes:</strong><br>`;
+    for (let pos in votes) {
+      message += `<strong>${pos}</strong>: ${votes[pos]}<br>`;
+    }
+    message += `<br>Email: ${email}`;
+    document.getElementById("confirmationMessage").innerHTML = message;
+
+    document.getElementById("confirmationPanel").classList.remove("hidden");
+  }
+</script>
+</body>
+</html>
